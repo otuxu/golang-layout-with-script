@@ -1,0 +1,22 @@
+
+  # {SERVICES} api.
+  {SERVICES}:
+    build:
+      context: ..
+      dockerfile: ./build/docker/{SERVICES}/Dockerfile
+    image: {SERVICES}_local
+    container_name: {PROJECT_NAME}_{SERVICES}
+    tty: true
+    volumes:
+      - ../go.mod:/app/go.mod
+      - ../go.sum:/app/go.sum
+      - ../cmd/{SERVICES}:/app/{SERVICES}/cmd
+      - ../internal/{SERVICES}:/app/{SERVICES}/internal
+      - ../pkg/{SERVICES}:/app/{SERVICES}/pkg
+      - ../test/{SERVICES}:/app/{SERVICES}/test
+      - ../api/{SERVICES}:/app/{SERVICES}/api
+      - ../tools:/app/{SERVICES}/tools
+    ports:
+      - "{PORTS}:8080"
+    command: "sh -c \"reflex -sr '(.go$$|go\\.mod)' -- go run ./cmd/main.go\""
+    restart: always
