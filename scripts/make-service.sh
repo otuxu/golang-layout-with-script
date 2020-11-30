@@ -46,7 +46,7 @@ cp scripts/templates/Dockerfile build/docker/${1}
 cp scripts/templates/main.go cmd/${1}
 
 $(cat build/docker/${1}/Dockerfile | sed -e "s/{SERVICES}/${1}/g" > ./build/docker/${1}/Dockerfile)
-$(cat scripts/templates/docker-compose.yml | sed -e "s/{SERVICES}/${1}/g" | sed -e "s/{PORTS}/${2}/g" >> ./deployment/docker-compose.yml)
+$(cat scripts/templates/docker-compose.yml | sed -e "s/{SERVICES}/${1}/g" | sed -e "s/{PORTS}/${2}/g" | sed -e "s/{PROJECT_NAME}/${PROJECT_NAME}/g" >> ./deployment/docker-compose.yml)
 
 echo 
 echo "Script finished successfully."
