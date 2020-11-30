@@ -42,10 +42,11 @@ done
 cd ${PROJECT_DIR}
 
 mkdir cmd/${1} internal/${1} pkg/${1} test/${1} api/${1} build/docker/${1}
+touch internal/${1}/.gitkeep pkg/${1}/.gitkeep test/${1}/.gitkeep api/${1}/.gitkeep
 cp scripts/templates/Dockerfile build/docker/${1}
 cp scripts/templates/main.go cmd/${1}
 
-$(cat build/docker/${1}/Dockerfile | sed -e "s/{SERVICES}/${1}/g" > ./build/docker/${1}/Dockerfile)
+$(sed -i "s/{SERVICES}/${1}/g" build/docker/${1}/Dockerfile)
 $(cat scripts/templates/docker-compose.yml | sed -e "s/{SERVICES}/${1}/g" | sed -e "s/{PORTS}/${2}/g" | sed -e "s/{PROJECT_NAME}/${PROJECT_NAME}/g" >> ./deployment/docker-compose.yml)
 
 echo 

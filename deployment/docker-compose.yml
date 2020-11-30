@@ -21,24 +21,5 @@ services:
     ports:
       - "8090:8080"
     command: "sh -c \"reflex -sr '(.go$$|go\\.mod)' -- go run ./cmd/main.go\""
-    restart: always  # service api.
-  service:
-    build:
-      context: ..
-      dockerfile: ./build/docker/service/Dockerfile
-    image: service_local
-    container_name: {PROJECT_NAME}_service
-    tty: true
-    volumes:
-      - ../go.mod:/app/go.mod
-      - ../go.sum:/app/go.sum
-      - ../cmd/service:/app/service/cmd
-      - ../internal/service:/app/service/internal
-      - ../pkg/service:/app/service/pkg
-      - ../test/service:/app/service/test
-      - ../api/service:/app/service/api
-      - ../tools:/app/service/tools
-    ports:
-      - "8091:8080"
-    command: "sh -c \"reflex -sr '(.go$$|go\\.mod)' -- go run ./cmd/main.go\""
-    restart: always
+    restart: always 
+    
